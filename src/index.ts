@@ -10,16 +10,11 @@ class StoreCache {
    * 构造方法
    * @param param 配置选项
    * @param param.prefix 存储前缀
-   * @param param.auto 自动清理过期数据 默认1分钟清理一次
    * @param param.store 存储对象
    */
-  constructor({ prefix = '', auto = 60 * 1000, store = localStorage }) {
+  constructor({ prefix = '', store = localStorage } = {}) {
     this.prefix = prefix;
     this.store = store;
-
-    if (auto) {
-      setInterval(() => this.cleanData(), auto);
-    }
   }
 
   /**
@@ -100,14 +95,8 @@ class StoreCache {
       return null; // 值为空是返回 null
     }
 
-    const { data, ttl } = this.decode(str);
-
-    if (this.expired(ttl)) {
-      this.store.removeItem(this.key(sid));
-      return null; // 删除并返回null
-    }
-
-    return data; // 有效期内返回数据
+    const { data } = this.decode(str);
+    return data;
   }
 
   /**
@@ -133,11 +122,8 @@ class StoreCache {
    */
   public touch(sid: string, ttl: number) {
     this.cleanData(); // 清理过期数据
-
     const data = this.get(sid);
-    if (data) {
-      this.set(sid, data, ttl);
-    }
+    this.set(sid, data, ttl);
   }
 
   /**

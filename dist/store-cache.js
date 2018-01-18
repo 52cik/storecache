@@ -28,7 +28,7 @@ var store = (function (localStorage) {
             return store[key] || null;
         },
         key: function (index) {
-            return store[keys[index]];
+            return keys[index];
         },
         removeItem: function (key) {
             for (var i = 0; i < this.length; i++) {
@@ -58,17 +58,12 @@ var StoreCache = /** @class */ (function () {
      * 构造方法
      * @param param 配置选项
      * @param param.prefix 存储前缀
-     * @param param.auto 自动清理过期数据 默认1分钟清理一次
      * @param param.store 存储对象
      */
     function StoreCache(_a) {
-        var _b = _a.prefix, prefix = _b === void 0 ? '' : _b, _c = _a.auto, auto = _c === void 0 ? 60 * 1000 : _c, _d = _a.store, store$$1 = _d === void 0 ? store : _d;
-        var _this = this;
+        var _b = _a === void 0 ? {} : _a, _c = _b.prefix, prefix = _c === void 0 ? '' : _c, _d = _b.store, store$$1 = _d === void 0 ? store : _d;
         this.prefix = prefix;
         this.store = store$$1;
-        if (auto) {
-            setInterval(function () { return _this.cleanData(); }, auto);
-        }
     }
     /**
      * 编码方法
@@ -138,12 +133,8 @@ var StoreCache = /** @class */ (function () {
         if (!str) {
             return null; // 值为空是返回 null
         }
-        var _a = this.decode(str), data = _a.data, ttl = _a.ttl;
-        if (this.expired(ttl)) {
-            this.store.removeItem(this.key(sid));
-            return null; // 删除并返回null
-        }
-        return data; // 有效期内返回数据
+        var data = this.decode(str).data;
+        return data;
     };
     /**
      * 存储数据
@@ -168,9 +159,7 @@ var StoreCache = /** @class */ (function () {
     StoreCache.prototype.touch = function (sid, ttl) {
         this.cleanData(); // 清理过期数据
         var data = this.get(sid);
-        if (data) {
-            this.set(sid, data, ttl);
-        }
+        this.set(sid, data, ttl);
     };
     /**
      * 删除某个数据

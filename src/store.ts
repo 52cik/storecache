@@ -19,7 +19,7 @@ export = (localStorage => {
       return store[key] || null;
     },
     key(index: number) {
-      return store[keys[index]];
+      return keys[index];
     },
     removeItem(key: string) {
       for (let i = 0; i < this.length; i++) {

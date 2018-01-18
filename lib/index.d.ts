@@ -7,12 +7,10 @@ declare class StoreCache {
      * 构造方法
      * @param param 配置选项
      * @param param.prefix 存储前缀
-     * @param param.auto 自动清理过期数据 默认1分钟清理一次
      * @param param.store 存储对象
      */
-    constructor({prefix, auto, store}: {
+    constructor({prefix, store}?: {
         prefix?: string;
-        auto?: number;
         store?: Storage;
     });
     /**
