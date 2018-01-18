@@ -3,6 +3,7 @@
     "target": "es5",
     "declaration": true,
     "outDir": "./lib",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "sourceMap": true,
   }
 }
