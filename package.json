@@ -1,5 +1,5 @@
 {
-  "name": "storecache",
+  "name": "storecache.js",
   "version": "1.0.2",
   "description": "Storage with expiration time based on localStorage",
   "main": "lib/index.js",
