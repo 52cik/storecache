@@ -13,9 +13,9 @@
 ### Install
 
 ```sh
-$ yarn add -D storecache.js
+$ yarn add storecache.js
 # or
-$ npm i -D storecache.js
+$ npm i -S storecache.js
 ```
 
 ### Usage
